@@ -6,6 +6,7 @@ type Selection struct {
 }
 
 // Sort 选择排序
+//
 // 规则: 找到数组中最小的元素，与数组第一个值交换；再找剩余中最小的元素，与数组第二个值交换，以此类推
 // 时间复杂度：(N-1)+(N-2)+(N-3)+...+2+1 = O(N2)
 // 优点：简单易理解，且不占用额外的内存空间
@@ -31,19 +32,4 @@ func (s *Selection) Sort() []int {
 	}
 
 	return s.Elements
-}
-
-func (s *Selection) Sort2() []int {
-
-	return nil
-}
-
-func less(el []int, a int, b int) bool {
-	return el[a] < el[b]
-}
-
-func exch(el []int, a int, b int) {
-	temp := el[a]
-	el[a] = el[b]
-	el[b] = temp
 }
