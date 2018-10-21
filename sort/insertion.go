@@ -2,7 +2,6 @@ package sort
 
 // Insertion 插入排序
 type Insertion struct {
-	Elements []int
 }
 
 // Sort 插入排序。适用于少量数据的排序
@@ -13,18 +12,17 @@ type Insertion struct {
 //		最理想情况下，数组只需遍历一次，这种情况下此算法是最高效的，O(N)；最差情况下，需遍历 N+(N-1)+(N-2)+...+2+1，即 O(N2)
 //		插入排序的性能很依赖与原始数组数据的顺序
 // 缺点：在最差的情况下，复杂度依旧比较高
-func (s *Insertion) Sort() []int {
-	for i := 1; i < len(s.Elements); i++ {
+func (s *Insertion) Sort(arr []int) []int {
+	for i := 1; i < len(arr); i++ {
 		// 若发现当前位置元素不小于前一元素时，停止比较
-		for j := i - 1; less(s.Elements, j+1, j); j-- {
-			if less(s.Elements, j+1, j) {
-				exch(s.Elements, j+1, j)
-			}
+		for j := i; j > 0 && less(arr, j, j-1); j-- {
+			exch(arr, j, j-1)
 		}
 	}
-	return s.Elements
+	return arr
 }
 
+// Sort2 todo: 插入排序的优化版
 func (s *Insertion) Sort2(arr []int) []int {
 	return nil
 }

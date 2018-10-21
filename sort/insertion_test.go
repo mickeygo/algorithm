@@ -1,58 +1,32 @@
 package sort
 
 import (
-	"reflect"
+	"math/rand"
 	"testing"
+	"time"
 )
 
 func TestInsertion_Sort(t *testing.T) {
-	tests := []struct {
-		name string
-		s    *Insertion
-		want []int
-	}{
-		// TODO: Add test cases.
-		{
-			"Insertion_1",
-			&Insertion{
-				Elements: []int{3, 4, 5, 6, 6, 7, 3, 8},
-			},
-			[]int{3, 3, 4, 5, 6, 6, 7, 8},
-		},
-		{
-			"Insertion_2",
-			&Insertion{
-				Elements: []int{8},
-			},
-			[]int{8},
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.s.Sort(); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Insertion.Sort() = %v, want %v", got, tt.want)
-			}
-		})
-	}
+	sort := Insertion{}
+	result := sort.Sort([]int{2, 1, 2})
+
+	t.Log(result)
+	t.Fail()
 }
 
-func TestInsertion_Sort2(t *testing.T) {
-	type args struct {
-		arr []int
+func BenchmarkInsertion_Sort(b *testing.B) {
+	N := 10
+	rand.Seed(time.Now().UnixNano())
+	in := make([]int, N)
+	for index := 0; index < N; index++ {
+		in[index] = rand.Intn(100)
 	}
-	tests := []struct {
-		name string
-		s    *Insertion
-		args args
-		want []int
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.s.Sort2(tt.args.arr); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Insertion.Sort2() = %v, want %v", got, tt.want)
-			}
-		})
-	}
+	sort := Insertion{}
+
+	b.StartTimer()
+	sort.Sort(in)
+	b.StopTimer()
+
+	b.Log(in)
+	b.Log(b.N)
 }
