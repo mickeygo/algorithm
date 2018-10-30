@@ -37,6 +37,7 @@ func Print(head *Node) {
 // Reverse 链表反转
 //
 // head 链表的起始节点
+// 返回 node 的尾部
 func Reverse(head *Node) *Node {
 	if head == nil || head.Next == nil {
 		return head
@@ -57,5 +58,5 @@ func Reverse(head *Node) *Node {
 		next = pNext
 	}
 
-	return next
+	return p
 }
