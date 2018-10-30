@@ -14,9 +14,9 @@ func TestReverse(t *testing.T) {
 		},
 	}
 
-	Reverse(node)
+	tail := Reverse(node)
 
-	Print(node)
+	Print(tail)
 
 	t.Fail()
 }

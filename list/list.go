@@ -37,10 +37,9 @@ func Print(head *Node) {
 // Reverse 链表反转
 //
 // head 链表的起始节点
-func Reverse(head *Node) {
-	if head == nil {
-		fmt.Printf("node is empty ... \n")
-		return
+func Reverse(head *Node) *Node {
+	if head == nil || head.Next == nil {
+		return head
 	}
 
 	p := head // p 用于记录当前节点
@@ -57,4 +56,6 @@ func Reverse(head *Node) {
 
 		next = pNext
 	}
+
+	return next
 }
