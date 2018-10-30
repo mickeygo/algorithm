@@ -57,6 +57,4 @@ func Reverse(head *Node) {
 
 		next = pNext
 	}
-
-	head = next
 }

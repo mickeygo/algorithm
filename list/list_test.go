@@ -14,8 +14,6 @@ func TestReverse(t *testing.T) {
 		},
 	}
 
-	Print(node)
-
 	Reverse(node)
 
 	Print(node)
