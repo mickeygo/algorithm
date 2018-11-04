@@ -111,28 +111,95 @@ func Reverse(head *Node) *Node {
 // 返回是否有环路，以及进入环路的节点索引（从0开始）
 // 现象：链表尾部指向了链表链路本身
 // 方法：https://www.aliyun.com/jiaocheng/1444871.html
-func CheckCycle(head *Node) (bool, uint) {
+func CheckCycle(head *Node) (bool, *Node) {
 	p1 := head
 	p2 := head
 
+	// 检查快指针，直到指向链表结尾，或与慢指针重叠
 	for p2 != nil && p2.Next != nil {
 		p1 = p1.Next
 		p2 = p2.Next.Next
-		// 若两节点碰撞
+		// 若两节点碰撞, 退出循环
 		if p1 == p2 {
 			break
 		}
 	}
 
-	return false, 0
+	// 此时链表中没有环
+	if p2 == nil || p2.Next == nil {
+		return false, nil
+	}
+
+	/*将slow指向首部,fast指向碰撞处,两者距离环路
+	 *起始处k步,若两者以相同速度移动,则必定会在环
+	 *路起始处碰在一起*/
+	p1 = head
+	for p1 != p2 {
+		p1 = p1.Next
+		p2 = p2.Next
+	}
+
+	return true, p2
+}
+
+type NodeRune struct {
+	Data rune
+	Next *NodeRune
 }
 
 // UnionSorted 合并两有序的链表
 //
 // 返回一个有序的链表
-func UnionSorted(sortedhead1 *Node, sortedhead2 *Node) *Node {
+// 思想：1. 先找到两者中较小的头
+//		2. 定义两哨兵，依次比较，直至到达一方的尾部
+//		3. 将后续的元素移至链表尾部
+// 注意点：此时间复杂度为 O(N), 关键点是依次
+func UnionSorted(head1 *NodeRune, head2 *NodeRune) *NodeRune {
+	if head1 == nil {
+		return head2
+	}
+	if head2 == nil {
+		return head1
+	}
 
-	return nil
+	var head, p *NodeRune
+	p1, p2 := head1, head2
+
+	// 找到起点小的节点
+	if head1.Data < head2.Data {
+		p = head1
+		p1 = p1.Next
+	} else {
+		p = head2
+		p2 = p2.Next
+	}
+
+	head = p
+
+	// 两链表元素比较大小，直到有一方为 nil
+	// 巧妙之处，而非使用内嵌循环
+	for p1 != nil && p2 != nil {
+		if p1.Data <= p2.Data {
+			p.Next = p1
+			p = p1
+			p1 = p1.Next
+		} else {
+			p.Next = p2
+			p = p2
+			p2 = p2.Next
+		}
+	}
+
+	// 将 p1 后续元素直接移到链表中
+	if p1 != nil {
+		p.Next = p1
+	}
+
+	if p2 != nil {
+		p.Next = p2
+	}
+
+	return head
 }
 
 // IndexOfMiddle 检索链表的中间节点
