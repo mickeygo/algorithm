@@ -19,10 +19,6 @@ func (s *Insertion) Sort(arr []int) []int {
 			exch(arr, j, j-1)
 		}
 	}
-	return arr
-}
 
-// Sort2 todo: 插入排序的优化版
-func (s *Insertion) Sort2(arr []int) []int {
-	return nil
+	return arr
 }
