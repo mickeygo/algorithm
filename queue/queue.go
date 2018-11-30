@@ -11,10 +11,11 @@ import (
 type CilcleQueue struct {
 	items []interface{}
 	front uint // 队头指针
-	rear  uint // 队尾指针，注意：队尾指针指向的数组中尾部元素的后一位
+	rear  uint // 队尾指针，注意：队尾指针指向的数组中尾部元素的后一位(初始化时都指向同一位置)
 	// 队列容量
 	Capacity uint
-	sync.Mutex
+
+	mutex sync.Mutex
 }
 
 // NewCilcleQueue 新建一个基于数组的环形队列
@@ -31,10 +32,11 @@ func NewCilcleQueue(N uint) *CilcleQueue {
 
 // Push 向队列加入数据
 func (queue *CilcleQueue) Push(item interface{}) (bool, error) {
-	queue.Lock()
-	defer queue.Unlock()
+	queue.mutex.Lock()
+	defer queue.mutex.Unlock()
 
 	// 检查队列是否已满
+	// 当尾部差一步就追上头部时，表示队列已满
 	if (queue.rear+1)%queue.Capacity == queue.front {
 		return false, errors.New("Queue is fully")
 	}
@@ -51,8 +53,8 @@ func (queue *CilcleQueue) Push(item interface{}) (bool, error) {
 //
 // 当队列中没有数据时，返回 nil
 func (queue *CilcleQueue) Pop() (bool, interface{}) {
-	queue.Lock()
-	defer queue.Unlock()
+	queue.mutex.Lock()
+	defer queue.mutex.Unlock()
 
 	// 检查队列中是否有数据
 	if queue.front == queue.rear {
