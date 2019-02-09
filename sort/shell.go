@@ -10,10 +10,10 @@ type Shell struct {
 
 // Sort 希尔排序
 //
-// 规则：
-// 时间复杂度：
+// 规则：将元素分组，每组内进行排序
+// 时间复杂度：平均为 O(NlogN); 最差条件下为 O(N^2)
 // 优点：
-// 缺点
+// 缺点：
 func (s *Shell) Sort(arr []int) []int {
 	if arr == nil || len(arr) == 0 || len(arr) == 1 {
 		return arr
